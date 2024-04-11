@@ -31,7 +31,11 @@
 
 #include "net_constants.h"
 
-// ensure we are using winsock2 on windows.
+#if defined(__cplusplus)
+extern "C" {            // Prevents name mangling of functions
+#endif
+
+    // ensure we are using winsock2 on windows.
 #if (_WIN32_WINNT < 0x0601)
 #undef _WIN32_WINNT
 #define _WIN32_WINNT 0x0601
@@ -48,14 +52,18 @@
 /// <param name="packet">The packet to read from</param>
 /// <param name="offset">A pointer to an offset that is updated, this should be passed to other read functions so they read from the correct place</param>
 /// <returns>The byte read</returns>
-uint8_t ReadByte(ENetPacket* packet, size_t* offset);
+    uint8_t ReadByte(ENetPacket* packet, size_t* offset);
 
-/// <summary>
-/// Read a signed short from the network packet
-/// Note that this assumes the packet is in the host's byte ordering
-/// In reality read/write code should use ntohs and htons to convert from network byte order to host byte order, so both big endian and little endian machines can play together
-/// </summary>
-/// <param name="packet">The packet to read from<</param>
-/// <param name="offset">A pointer to an offset that is updated, this should be passed to other read functions so they read from the correct place</param>
-/// <returns>The signed short that is read</returns>
-int16_t ReadShort(ENetPacket* packet, size_t* offset);
+    /// <summary>
+    /// Read a signed short from the network packet
+    /// Note that this assumes the packet is in the host's byte ordering
+    /// In reality read/write code should use ntohs and htons to convert from network byte order to host byte order, so both big endian and little endian machines can play together
+    /// </summary>
+    /// <param name="packet">The packet to read from<</param>
+    /// <param name="offset">A pointer to an offset that is updated, this should be passed to other read functions so they read from the correct place</param>
+    /// <returns>The signed short that is read</returns>
+    int16_t ReadShort(ENetPacket* packet, size_t* offset);
+
+#if defined(__cplusplus)
+}
+#endif
