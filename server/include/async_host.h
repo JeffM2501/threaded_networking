@@ -2,6 +2,8 @@
 
 #include "net_common.h"
 
+#include "async_connection.h"
+
 #include <unordered_map>
 #include <thread>
 #include <atomic>
@@ -36,7 +38,6 @@ public:
         uint8_t PlayerID = 0;
     };
 
-
 private:
     std::thread m_worker;
     std::atomic_bool m_runWorker = false;
@@ -44,9 +45,11 @@ private:
 
     std::unordered_map<uint32_t, PeerInfo> m_peers;
 
+    std::unordered_map<uint32_t, AsyncConnection*> m_connections;
+
+    std::list<ENetPeer*> m_pendingAccepts;
+
     void NetworkLoop();
     
     void SendToAllBut(ENetPacket* packet, int exceptPlayerId);
-
-
 };

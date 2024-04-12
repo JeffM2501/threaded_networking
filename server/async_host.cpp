@@ -1,3 +1,6 @@
+#define ENET_IMPLEMENTATION
+#include "net_common.h"
+
 #include "async_host.h"
 
 ENetHost* g_server = nullptr;
